@@ -16,19 +16,44 @@ form.addEventListener("submit",(event)=>
 {
     event.preventDefault();
     const currencyValue = currency.value;
+    let symbol = null;
     let newPrice = null;
     let money = amount.value;
     if(currencyValue == "EUR"){
-        newPrice = convertCurrency(money,EUR,'€')
+        symbol = '€'
+        newPrice = convertCurrency(money,EUR,symbol)
     }else if(currencyValue == "USD"){
-        newPrice = convertCurrency(money,USD,'U$')
+        symbol = 'US$'
+        newPrice = convertCurrency(money,USD,symbol)
     }else{
-        newPrice = convertCurrency(money,GPB,'£')
+        symbol = '£'
+        newPrice = convertCurrency(money,GPB,symbol)
     }
-    console.log(newPrice);
 })
 
 function convertCurrency(amount,price,symbol){
-    let newPrice = amount * price;
-    return `${symbol} ${price}`
+    const footer = document.querySelector("footer");
+
+    try{
+        newPrice = (amount * price).toFixed(2);
+        footer.classList.add("show-result");
+
+        const description = document.querySelector("#description");
+        description.textContent = `${symbol} 1 = ${formartCurrencyBRL(price)}`
+
+        const result = document.querySelector("#result");
+
+        result.textContent = `${String(newPrice).replace(".",",")} Reais`
+    }catch(e){
+        footer.classList.remove("show-result");
+        alert("Peço Perdão mais algum erro ocorreu");
+    }
 }
+
+function formartCurrencyBRL(value){
+    return Number(value).toLocaleString("pt-BR",{
+        style:"currency",
+        currency:"BRL"
+    })
+}
+
