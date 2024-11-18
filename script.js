@@ -1,6 +1,10 @@
 const amount = document.querySelector("#amount");
 const currency = document.querySelector("#currency");
 const form = document.querySelector("form");
+
+const USD = 5.8;
+const EUR = 6.11;
+const GPB = 7.33;
 amount.addEventListener("input",()=>{
     //usando regex para negar letras
     const hasCharactersRegex = /\D+/g;
@@ -15,11 +19,11 @@ form.addEventListener("submit",(event)=>
     let newPrice = null;
     let money = amount.value;
     if(currencyValue == "EUR"){
-        newPrice = convertCurrency(money,6.11,'€')
+        newPrice = convertCurrency(money,EUR,'€')
     }else if(currencyValue == "USD"){
-        newPrice = convertCurrency(money,5.8,'U$')
+        newPrice = convertCurrency(money,USD,'U$')
     }else{
-        newPrice = convertCurrency(money,7.33,'£')
+        newPrice = convertCurrency(money,GPB,'£')
     }
     console.log(newPrice);
 })
